@@ -15,7 +15,6 @@ searchBtn.click(searchCity);
 
 function searchCity() {
     var userCityName = citySearch.val();
-    addToHistory(userCityName);
 
     var userLat;
     var userLon;
@@ -33,7 +32,12 @@ function searchCity() {
         return response.json();
         })
         .then(function (data) {
-        console.log(data);
+        console.log(data.city.name, data.list[0].main.temp, data.list[0].wind.speed, data.list[0].main.humidity);
+        cityName.text(data.city.name);
+        cityTemp.text(Math.round(data.list[0].main.temp));
+        cityWind.text(data.list[0].wind.speed);
+        cityHumidity.text(data.list[0].main.humidity);
+        addToHistory(data.city.name);
         })
     })
 }
