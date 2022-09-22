@@ -33,7 +33,6 @@ function searchCity(event) {
         return response.json();
         })
         .then(function (data) {
-        console.log(data.city.name, data.list[0].main.temp, data.list[0].wind.speed, data.list[0].main.humidity);
         cityName.text(data.city.name);
         cityTemp.text(Math.round(data.list[0].main.temp));
         cityWind.text(data.list[0].wind.speed);
@@ -42,6 +41,48 @@ function searchCity(event) {
             cityHistory.push(data.city.name);
             addToHistory(data.city.name);
         }
+        console.log(data)
+        fiveDayForecast = [{
+            date: data.list[8].dt_txt,
+            temp: data.list[8].main.temp,
+            wind: data.list[8].wind.speed,
+            humidity: data.list[8].main.humidity,
+        },
+        {
+            date: data.list[16].dt_txt,
+            temp: data.list[16].main.temp,
+            wind: data.list[16].wind.speed,
+            humidity: data.list[16].main.humidity, 
+        },
+        {
+            date: data.list[24].dt_txt,
+            temp: data.list[24].main.temp,
+            wind: data.list[24].wind.speed,
+            humidity: data.list[24].main.humidity,
+        },
+        {
+            date: data.list[32].dt_txt,
+            temp: data.list[32].main.temp,
+            wind: data.list[32].wind.speed,
+            humidity: data.list[32].main.humidity,
+        },
+        {
+            date: data.list[39].dt_txt,
+            temp: data.list[39].main.temp,
+            wind: data.list[39].wind.speed,
+            humidity: data.list[39].main.humidity,
+        }]
+        for (i = 0; i < fiveDayForecast.length; i++) {
+            var card = document.createElement('div');
+            card.innerHTML = `<div class="card-header"><h4>${fiveDayForecast[i].date}</h4></div>
+          <div class="card-body">
+            <p class="card-text">Temp: ${Math.round(fiveDayForecast[i].temp)} °F</p>
+            <p class="card-text">Temp: ${fiveDayForecast[i].wind} MPH</p>
+            <p class="card-text">Temp: ${fiveDayForecast[i].humidity}%</p>
+          </div>`;
+          fiveDayContainer.append(card);
+        }
+
         })
     }).then(function () {citySearch.val("")})
 }
