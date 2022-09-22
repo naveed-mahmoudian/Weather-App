@@ -13,7 +13,8 @@ var APIKey = 'f28365ef199fb9cd47b8171923d046b6'
 // Get Searched City Name
 searchBtn.click(searchCity);
 
-function searchCity() {
+function searchCity(event) {
+    event.preventDefault();
     var userCityName = citySearch.val();
 
     var userLat;
@@ -37,17 +38,17 @@ function searchCity() {
         cityTemp.text(Math.round(data.list[0].main.temp));
         cityWind.text(data.list[0].wind.speed);
         cityHumidity.text(data.list[0].main.humidity);
-        addToHistory(data.city.name);
+        if (cityHistory.indexOf(data.city.name) === -1 ){
+            cityHistory.push(data.city.name);
+            addToHistory(data.city.name);
+        }
         })
-    })
+    }).then(function () {citySearch.val("")})
 }
 
 function addToHistory(city) {
-    cityHistory.push(city);
-    for (i = 0; i < cityHistory.length; i++) {
-        searchHistoryEl = document.createElement('button');
-        searchHistoryEl.setAttribute('class', 'btn btn-secondary col-12 mb-3');
-        searchHistoryEl.innerText = city;
-        searchHistoryContainer.append(searchHistoryEl);
-    }
+    searchHistoryEl = document.createElement('button');
+    searchHistoryEl.setAttribute('class', 'btn btn-secondary col-12 mb-3');
+    searchHistoryEl.innerText = city;
+    searchHistoryContainer.append(searchHistoryEl);
 }

@@ -31,16 +31,21 @@
         <!-- Search & History Container -->
         <div class="column col-4">
           <h2>Search for a City:</h2>
-          <div class="input-group">
-            <input
-              type="text"
-              class="citySearch form-control col-12"
-              placeholder="Los Angeles"
-            />
-            <button type="button" class="btn btn-primary searchBtn mt-2 col-12">
-              Search
-            </button>
-          </div>
+          <form>
+            <div class="form-group">
+              <input
+                type="text"
+                class="citySearch form-control col-12"
+                placeholder="Los Angeles"
+              />
+              <button
+                type="submit"
+                class="btn btn-primary searchBtn mt-2 col-12"
+              >
+                Search
+              </button>
+            </div>
+          </form>
           <hr />
           <div class="searchHistory"></div>
         </div>
