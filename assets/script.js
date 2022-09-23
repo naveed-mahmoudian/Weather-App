@@ -10,19 +10,24 @@ var cityHumidity = $(".cityHumidity");
 var fiveDayContainer = $(".fiveDayContainer");
 var APIKey = "f28365ef199fb9cd47b8171923d046b6";
 
-// Get Searched City Name
+// Search Button Event Listener
 searchBtn.click(searchCity);
 
+// Searches for city that was typed in
 function searchCity(event) {
   event.preventDefault();
   var userCityName = citySearch.val();
 
+  fetchCityData(userCityName);
+}
+
+// Fetches city data and displays it
+function fetchCityData(city) {
   var userLat;
   var userLon;
-
   var fetchURL =
     "http://api.openweathermap.org/geo/1.0/direct?q=" +
-    userCityName +
+    city +
     "&appid=" +
     APIKey;
   fetch(fetchURL)
@@ -52,7 +57,7 @@ function searchCity(event) {
             cityHistory.push(data.city.name);
             addToHistory(data.city.name);
           }
-          console.log(data);
+
           fiveDayForecast = [
             {
               date: data.list[8].dt_txt.slice(0, -9),
@@ -108,9 +113,19 @@ function searchCity(event) {
     });
 }
 
+// Adds the searched city to the history list
 function addToHistory(city) {
   searchHistoryEl = document.createElement("button");
   searchHistoryEl.setAttribute("class", "btn btn-secondary col-12 mb-3");
+  searchHistoryEl.setAttribute("data-city", city);
   searchHistoryEl.innerText = city;
   searchHistoryContainer.append(searchHistoryEl);
+  searchHistoryEl.addEventListener("click", searchCityHistory);
+}
+
+// Creates the search history button and functionality
+function searchCityHistory(event) {
+  if (event.target.hasAttribute("data-city")) {
+    fetchCityData(event.target.getAttribute("data-city"));
+  }
 }
