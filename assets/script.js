@@ -26,7 +26,7 @@ function fetchCityData(city) {
   var userLat;
   var userLon;
   var fetchURL =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
     "&appid=" +
     APIKey;
