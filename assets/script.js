@@ -38,7 +38,7 @@ function fetchCityData(city) {
       userLat = data[0].lat;
       userLon = data[0].lon;
       fetch(
-        "http://api.openweathermap.org/data/2.5/forecast?lat=" +
+        "https://api.openweathermap.org/data/2.5/forecast?lat=" +
           userLat +
           "&lon=" +
           userLon +
