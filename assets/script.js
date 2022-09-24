@@ -8,6 +8,7 @@ var cityTemp = $(".cityTemp");
 var cityWind = $(".cityWind");
 var cityHumidity = $(".cityHumidity");
 var fiveDayContainer = $(".fiveDayContainer");
+var formGroup = $("#form");
 var APIKey = "f28365ef199fb9cd47b8171923d046b6";
 
 // Search Button Event Listener
@@ -18,7 +19,11 @@ function searchCity(event) {
   event.preventDefault();
   var userCityName = citySearch.val();
 
-  fetchCityData(userCityName);
+  if (userCityName === "") {
+    $("#errorModal").modal("show");
+  } else {
+    fetchCityData(userCityName);
+  }
 }
 
 // Fetches city data and displays it
