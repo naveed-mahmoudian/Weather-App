@@ -115,6 +115,10 @@ function fetchCityData(city) {
     })
     .then(function () {
       citySearch.val("");
+    })
+    .catch(function () {
+      $("#errorModal").modal("show");
+      citySearch.val("");
     });
 }
 
