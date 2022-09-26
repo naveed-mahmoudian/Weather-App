@@ -98,6 +98,7 @@ function fetchCityData(city) {
           fiveDayContainer.html("");
           for (i = 0; i < fiveDayForecast.length; i++) {
             var card = document.createElement("div");
+            card.setAttribute("class", "bg-primary bg-gradient m-1");
             card.setAttribute("id", "forecast" + [i]);
             card.innerHTML = `<div class="card-header"><h4>${
               fiveDayForecast[i].date
