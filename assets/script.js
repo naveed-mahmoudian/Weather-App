@@ -14,15 +14,39 @@ var APIKey = "f28365ef199fb9cd47b8171923d046b6";
 // Search Button Event Listener
 searchBtn.click(searchCity);
 
+init();
+function init() {
+  var cityStorage = JSON.parse(localStorage.getItem("cityStorage"));
+  if (cityStorage != null) {
+    for (i = 0; i < cityStorage.length; i++) {
+      cityHistory.push(cityStorage[i].city);
+      addToHistory(cityStorage[i].city);
+    }
+  }
+}
+
 // Searches for city that was typed in
 function searchCity(event) {
   event.preventDefault();
-  var userCityName = citySearch.val();
+  var userCityName = citySearch
+    .val()
+    .split(" ")
+    .map((c) => c[0].toUpperCase() + c.substring(1).toLowerCase())
+    .join(" ");
 
   if (userCityName === "") {
     $("#errorModal").modal("show");
   } else {
+    console.log(userCityName);
     fetchCityData(userCityName);
+  }
+}
+
+function checkHistory(arr, c) {
+  var found = arr.some((el) => el.city === c);
+  if (!found) {
+    arr.push({ city: c });
+    addToHistory(c);
   }
 }
 
@@ -54,14 +78,13 @@ function fetchCityData(city) {
           return response.json();
         })
         .then(function (data) {
+          // console.log(data);
           cityName.text(data.city.name);
           cityTemp.text(Math.round(data.list[0].main.temp));
           cityWind.text(data.list[0].wind.speed);
           cityHumidity.text(data.list[0].main.humidity);
-          if (cityHistory.indexOf(data.city.name) === -1) {
-            cityHistory.push(data.city.name);
-            addToHistory(data.city.name);
-          }
+
+          checkHistory(cityHistory, data.city.name);
 
           fiveDayForecast = [
             {
@@ -131,6 +154,15 @@ function addToHistory(city) {
   searchHistoryEl.innerText = city;
   searchHistoryContainer.append(searchHistoryEl);
   searchHistoryEl.addEventListener("click", searchCityHistory);
+
+  var cityStorage = JSON.parse(localStorage.getItem("cityStorage"));
+  if (cityStorage != null) {
+    localStorage.setItem("cityStorage", JSON.stringify(cityHistory));
+    console.log("Added to local storage");
+  } else {
+    console.log("Added to EMPTY local storage");
+    localStorage.setItem("cityStorage", JSON.stringify(cityHistory));
+  }
 }
 
 // Creates the search history button and functionality
