@@ -9,6 +9,7 @@ var cityWind = $(".cityWind");
 var cityHumidity = $(".cityHumidity");
 var fiveDayContainer = $(".fiveDayContainer");
 var formGroup = $("#form");
+var buttonContainer = $("#buttonContainer");
 var APIKey = "f28365ef199fb9cd47b8171923d046b6";
 var cityStorage;
 
@@ -37,6 +38,7 @@ function searchCity(event) {
     console.log(userCityName);
     saveCity({ city: userCityName });
     fetchCityData(userCityName);
+    citySearch.val("");
   }
 }
 
@@ -48,6 +50,11 @@ function saveCity(city) {
 
 // Fetches city data and displays it
 function fetchCityData(city) {
+  buttonContainer.html("");
+  buttonContainer.html(`<button class="btn btn-primary searchBtn mt-2 col-12" type="button" disabled>
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Loading Weather...
+  </button>`);
   var userLat;
   var userLon;
   var fetchURL =
@@ -134,7 +141,13 @@ function fetchCityData(city) {
         });
     })
     .then(function () {
-      citySearch.val("");
+      buttonContainer.html(`<button
+        type="submit"
+        class="btn btn-primary searchBtn mt-2 col-12"
+      >
+        Search
+      </button>`);
+      $(".searchBtn").click(searchCity);
     })
     .catch(function () {
       $("#errorModal").modal("show");

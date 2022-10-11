@@ -37,56 +37,53 @@
         <!-- Search & History Container -->
         <div class="column col-4">
           <h2>Search for a City:</h2>
-          <form>
-            <div class="form-group" id="form">
-              <input
-                type="text"
-                class="citySearch form-control col-12"
-                placeholder="Los Angeles"
-              />
-              <button
-                type="submit"
-                class="btn btn-primary searchBtn mt-2 col-12"
-              >
-                Search
-              </button>
-              <!-- Modal -->
-              <div
-                class="modal fade"
-                id="errorModal"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="errorModalLabel"
-                aria-hidden="true"
-              >
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="errorModalLabel">Error</h5>
-                      <button
-                        type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">Please enter a valid city name</div>
-                    <div class="modal-footer">
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-dismiss="modal"
-                      >
-                        Close
-                      </button>
-                    </div>
-                  </div>
+          <div class="input-group">
+            <input
+              type="text"
+              class="citySearch form-control col-12"
+              placeholder="Los Angeles"
+            />
+          </div>
+          <div class="input-group" id="buttonContainer">
+            <button type="submit" class="btn btn-primary searchBtn mt-2 col-12">
+              Search
+            </button>
+          </div>
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="errorModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="errorModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">Please enter a valid city name</div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
                 </div>
               </div>
             </div>
-          </form>
+          </div>
           <hr />
           <div class="searchHistory"></div>
         </div>
