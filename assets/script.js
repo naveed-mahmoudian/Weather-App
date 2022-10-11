@@ -80,7 +80,6 @@ function fetchCityData(city) {
           return response.json();
         })
         .then(function (data) {
-          // console.log(data);
           cityName.text(data.city.name);
           cityTemp.text(Math.round(data.list[0].main.temp));
           cityWind.text(data.list[0].wind.speed);
