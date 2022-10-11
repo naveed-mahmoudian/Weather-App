@@ -26,16 +26,16 @@ function init() {
 // Searches for city that was typed in
 function searchCity(event) {
   event.preventDefault();
-  var userCityName = citySearch
-    .val()
-    .split(" ")
-    .map((c) => c[0].toUpperCase() + c.substring(1).toLowerCase())
-    .join(" ");
 
-  if (userCityName === "") {
+  if (userCityName === undefined) {
     $("#errorModal").modal("show");
   } else {
-    console.log(userCityName);
+    var userCityName = citySearch
+      .val()
+      .split(" ")
+      .map((c) => c[0].toUpperCase() + c.substring(1).toLowerCase())
+      .join(" ");
+
     saveCity({ city: userCityName });
     fetchCityData(userCityName);
     citySearch.val("");
