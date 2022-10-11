@@ -27,7 +27,7 @@ function init() {
 function searchCity(event) {
   event.preventDefault();
 
-  if (userCityName === undefined) {
+  if (citySearch.val() === "") {
     $("#errorModal").modal("show");
   } else {
     var userCityName = citySearch
@@ -35,7 +35,6 @@ function searchCity(event) {
       .split(" ")
       .map((c) => c[0].toUpperCase() + c.substring(1).toLowerCase())
       .join(" ");
-
     saveCity({ city: userCityName });
     fetchCityData(userCityName);
     citySearch.val("");
