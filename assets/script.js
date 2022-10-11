@@ -1,7 +1,7 @@
 // DOM Elements & Variables
 var citySearch = $(".citySearch");
 var searchBtn = $(".searchBtn");
-var searchHistoryContainer = $(".searchHistory");
+var searchHistoryContainer = document.querySelector(".searchHistory");
 var cityHistory = [];
 var cityName = $(".cityName");
 var cityTemp = $(".cityTemp");
@@ -10,19 +10,16 @@ var cityHumidity = $(".cityHumidity");
 var fiveDayContainer = $(".fiveDayContainer");
 var formGroup = $("#form");
 var APIKey = "f28365ef199fb9cd47b8171923d046b6";
+var cityStorage;
 
 // Search Button Event Listener
 searchBtn.click(searchCity);
 
 init();
+// Initializes the page with local storage and adds to history
 function init() {
-  var cityStorage = JSON.parse(localStorage.getItem("cityStorage"));
-  if (cityStorage != null) {
-    for (i = 0; i < cityStorage.length; i++) {
-      cityHistory.push(cityStorage[i].city);
-      addToHistory(cityStorage[i].city);
-    }
-  }
+  cityStorage = JSON.parse(localStorage.getItem("cityStorage")) || [];
+  addToHistory();
 }
 
 // Searches for city that was typed in
@@ -38,16 +35,15 @@ function searchCity(event) {
     $("#errorModal").modal("show");
   } else {
     console.log(userCityName);
+    saveCity({ city: userCityName });
     fetchCityData(userCityName);
   }
 }
 
-function checkHistory(arr, c) {
-  var found = arr.some((el) => el.city === c);
-  if (!found) {
-    arr.push({ city: c });
-    addToHistory(c);
-  }
+// Saves city to local storage
+function saveCity(city) {
+  cityStorage.push(city);
+  localStorage.setItem("cityStorage", JSON.stringify(cityStorage));
 }
 
 // Fetches city data and displays it
@@ -84,7 +80,7 @@ function fetchCityData(city) {
           cityWind.text(data.list[0].wind.speed);
           cityHumidity.text(data.list[0].main.humidity);
 
-          checkHistory(cityHistory, data.city.name);
+          addToHistory();
 
           fiveDayForecast = [
             {
@@ -147,21 +143,17 @@ function fetchCityData(city) {
 }
 
 // Adds the searched city to the history list
-function addToHistory(city) {
-  searchHistoryEl = document.createElement("button");
-  searchHistoryEl.setAttribute("class", "btn btn-secondary col-12 mb-3");
-  searchHistoryEl.setAttribute("data-city", city);
-  searchHistoryEl.innerText = city;
-  searchHistoryContainer.append(searchHistoryEl);
-  searchHistoryEl.addEventListener("click", searchCityHistory);
-
-  var cityStorage = JSON.parse(localStorage.getItem("cityStorage"));
-  if (cityStorage != null) {
-    localStorage.setItem("cityStorage", JSON.stringify(cityHistory));
-    console.log("Added to local storage");
-  } else {
-    console.log("Added to EMPTY local storage");
-    localStorage.setItem("cityStorage", JSON.stringify(cityHistory));
+function addToHistory() {
+  if (searchHistoryContainer.childElementCount > 0) {
+    searchHistoryContainer.innerHTML = "";
+  }
+  for (var i = 0; i < cityStorage.length; i++) {
+    searchHistoryEl = document.createElement("button");
+    searchHistoryEl.setAttribute("class", "btn btn-secondary col-12 mb-3");
+    searchHistoryEl.setAttribute("data-city", cityStorage[i].city);
+    searchHistoryEl.innerText = cityStorage[i].city;
+    searchHistoryContainer.append(searchHistoryEl);
+    searchHistoryEl.addEventListener("click", searchCityHistory);
   }
 }
 
