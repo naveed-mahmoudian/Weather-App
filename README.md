@@ -1,4 +1,4 @@
-# Challenge 06 - Weather App
+# Weather App
 
 ## Description
 
