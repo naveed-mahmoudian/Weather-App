@@ -131,8 +131,8 @@ function fetchCityData(city) {
             <p class="card-text">Temp: ${Math.round(
               fiveDayForecast[i].temp
             )} °F</p>
-            <p class="card-text">Temp: ${fiveDayForecast[i].wind} MPH</p>
-            <p class="card-text">Temp: ${fiveDayForecast[i].humidity}%</p>
+            <p class="card-text">Wind: ${fiveDayForecast[i].wind} MPH</p>
+            <p class="card-text">Humidity: ${fiveDayForecast[i].humidity}%</p>
           </div>`;
             fiveDayContainer.append(card);
           }
